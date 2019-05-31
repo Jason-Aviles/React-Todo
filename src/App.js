@@ -42,14 +42,34 @@ this.setState({
 })
   }
 
-  Clear = (e)=>{
-    e.preventDefault();
-   this.setState({
-     tasks:[...this.setState.tasks.filter(
-       item => { return item !==e }
-     )]
+
+  toggleItem = (id) => {
+   this.setState((prevState)=> {
+    return {
+      tasks: prevState.tasks.map(
+        (task)=>{
+          if(task.id === id){
+            return {
+              ...task,completed:!task.completed
+            }
+          }else {
+            return task;
+          }
+        }
+      )
+    }
    })
-  }
+   
+  };
+
+  clearPurchased = e => {
+    e.preventDefault();
+    // if item is purchased (item.purchased is true) then filter out
+    this.setState({
+      tasks: this.state.tasks.filter((task) => {return !task.completed})
+    });
+  };
+
 
 
 
@@ -57,14 +77,23 @@ this.setState({
   // design `App` to be the parent component of your application.
   // this component is going to take care of state, and any change handlers you need to work with your state
   render() {
+    
     return (
       <div>
         <h2> Todo App!</h2>
-     <TodoList tasks={this.state.tasks}/>
-      <TodoForm taskInput={this.state.taskInput} changeHandler={this.changeHandler} addTask={this.addTask} Clear={this.Clear}/>
+     <TodoList
+      tasks={this.state.tasks} 
+       toggleItem={this.toggleItem} 
+        clearPurchased={this.clearPurchased}/>
+
+
+      <TodoForm
+       taskInput={this.state.taskInput} changeHandler={this.changeHandler}
+        addTask={this.addTask} />
       </div>
     );
   }
 }
+
 
 export default App;

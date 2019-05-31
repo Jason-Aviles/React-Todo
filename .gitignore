@@ -21,3 +21,14 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+
+
+hen(resp => {
+        return resp.json();
+      })
+      .then(res => {
+        console.log(http://res.name );
+        this.setState({ name: [...this.state.name, http://res.name ] });
+      });
